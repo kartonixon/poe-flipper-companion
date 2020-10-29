@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 
+import { parseTrade } from './util/parseTrade'
 import useInterval from './util/useInterval';
 import TradeRow from './TradeRow';
 
 const fs = window.require('fs');
-const shortid = window.require('shortid');
 
 //TODO: create a config
 const CLIENT_TXT_PATH = 'C:/Program Files (x86)/Steam/steamapps/common/Path of Exile/logs/client.txt';
@@ -42,22 +42,9 @@ function TradeList() {
     }
 
     function addTrade(t) {
-        const regexp = /@From (.*): (.*)/;
-        const matchedRegexp = regexp.exec(t);
-
-        if (matchedRegexp) {
-            const from = matchedRegexp[1];
-            const nickname = from.split(" ").length > 1 ? from.split(" ")[1] : from;
-            //TODO: extract information about trade (x => y)
-            //TODO: add hotkeys to top-most trade (F5,F6,F7,F8)
-            //TODO: calculate x => y ratio
-            const message = matchedRegexp[2];
-            const id = shortid.generate();
-            const newTrade = {
-              id: id,
-              nickname: nickname,
-              message: message
-            };
+        const newTrade = parseTrade(t);
+        console.log(newTrade);
+        if (newTrade) {
             setTrades([...trades, newTrade]);
         }
     }
@@ -70,7 +57,8 @@ function TradeList() {
                     key={trade.id} 
                     id={trade.id} 
                     nickname={trade.nickname} 
-                    message={trade.message} 
+                    message={trade.message}
+                    ratio={trade.ratio} 
                     onDelete={removeTrade}/>
                 ))}
         </div>

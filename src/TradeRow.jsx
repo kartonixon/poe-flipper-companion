@@ -1,19 +1,18 @@
 import React from 'react';
-import { sendCommandToPoe } from './util/poeIntegration.js';
+import { invitePlayer, tradePlayer, kickPlayer } from './util/poeIntegration.js';
 
 function TradeRow(props) {
 
     function handleTrade() {
-        sendCommandToPoe("/tradewith " + props.nickname);
+        tradePlayer(props.nickname)
     }
 
     function handleInvite() {
-        sendCommandToPoe("/invite " + props.nickname);
+        invitePlayer(props.nickname)
     }
 
     function handleKick() {
-        sendCommandToPoe("/kick " + props.nickname);
-        sendCommandToPoe("@" + props.nickname + " thanks");
+        kickPlayer(props.nickname)
     }
 
     function handleDelete() {
@@ -24,6 +23,7 @@ function TradeRow(props) {
         <div>
             <h3>{props.nickname}</h3>
             <p>{props.message}</p>
+            {props.ratio && <p>ratio: {props.ratio}</p>}
             <button onClick={handleInvite}>INVITE</button>
             <button onClick={handleTrade}>TRADE</button>
             <button onClick={handleKick}>KICK</button>

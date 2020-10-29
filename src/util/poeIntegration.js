@@ -20,4 +20,16 @@ function sendCommandToPoe(command) {
     robot.keyTap('enter');
 }
 
-export { sendCommandToPoe };
+function invitePlayer(nickname) {
+    sendCommandToPoe("/invite " + nickname);
+}
+
+function tradePlayer(nickname) {
+    sendCommandToPoe("/tradewith " + nickname);
+}
+
+function kickPlayer(nickname) {
+    sendCommandToPoe("/kick " + nickname);
+}
+
+export { invitePlayer, tradePlayer, kickPlayer };

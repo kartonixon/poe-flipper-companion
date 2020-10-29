@@ -1,7 +1,6 @@
-const electron = require('electron');
-const app = electron.app;
+const { app, BrowserWindow } = require('electron');
+
 app.allowRendererProcessReuse = false;
-const BrowserWindow = electron.BrowserWindow;
 
 let mainWindow;
 
